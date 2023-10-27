@@ -1,11 +1,12 @@
 from __future__ import annotations
-import yaml
-from typing import TypeAlias, Union, Sequence
-from pymdownx.blocks import BlocksExtension, BlocksProcessor
-from pymdownx.blocks.block import Block
-import xml.etree.ElementTree as etree
-import markdown
 
+import xml.etree.ElementTree as etree
+from typing import Sequence, TypeAlias, Union
+
+import markdown
+import yaml
+from pymdownx.blocks import BlocksExtension, BlocksProcessor
+from pymdownx.blocks.block import Block, type_html_identifier
 
 class InvalidYAMLError(BaseException):
     """Raised when YAML is invalid"""
@@ -90,35 +91,35 @@ class DirTree:
         return _tree
 
     def build(self) -> str:
-        final_tree= self.build_output(self.tree).rstrip()
+        final_tree = self.build_output(self.tree).rstrip()
         return final_tree
 
 
 class DirTreeBlock(Block):
     NAME = "dirtree"
     ARGUMENT = None
-    OPTIONS = {"type": [""]}
+    OPTIONS = {"type": ["", type_html_identifier]}
 
     def on_create(self, parent: etree.Element) -> etree.Element:
-        return etree.SubElement(parent, "div")
+        classes = ["admonition"]
+        self_type = self.options["type"]
+        if self_type:
+            classes.append(self_type)
+        el = etree.SubElement(parent, "div", {"class": " ".join(classes)})
+        title = etree.SubElement(el, "p", {"class": "admonition-title"})
+        if not self.argument:
+            title.text = "Directory Tree"
+        else:
+            title.text = self.argument
+        return el
 
     def on_end(self, block: etree.Element) -> None:
-        text = block.findtext("p")
-        if text:
-            classes = ["admonition"]
-            self_type = self.options["type"]
-            if self_type:
-                classes.append(self_type)
-
-            block.clear()
-            tree = DirTree(text)
-            el = etree.SubElement(block, "pre", {"class": " ".join(classes)})
-            title = etree.SubElement(el, "p", {"class": "admonition-title"})
-            if not self.argument:
-                title.text = "Directory Tree"
-            else:
-                title.text = self.argument
-            dt = etree.SubElement(el, "p")
+        yaml_content = block.find("p[2]")
+        yaml_tree = block.findtext("p[2]")
+        if yaml_tree and yaml_content is not None:
+            block.remove(yaml_content)
+            tree = DirTree(yaml_tree)
+            dt = etree.SubElement(block, "pre")
             dt.text = tree.build()
 
 
@@ -131,8 +132,3 @@ class DirTreeExtension(BlocksExtension):
 
 def makeExtension(*args, **kwargs) -> DirTreeExtension:
     return DirTreeExtension(*args, **kwargs)
-
-
-if __name__ == "__main__":
-    tree = DirTree(ex).build()
-    print(tree)

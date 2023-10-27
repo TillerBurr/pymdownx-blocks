@@ -20,11 +20,12 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = [
     "mkdocs>=1.5.3",
-    "pytest>=7.4.2",
+    "pytest>=7.4.3",
     "mkdocs-material>=9.4.6",
     "mypy>=1.6.1",
     "types-PyYAML>=6.0.12.12",
     "types-Markdown>=3.5.0.0",
+    "pytest-cov>=4.1.0",
 ]
 
 [tool.hatch.metadata]
@@ -32,3 +33,8 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.sdist]
 include = ["src/pymdownx_blocks"]
+
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov=pymdownx_blocks --cov-report=term-missing"
