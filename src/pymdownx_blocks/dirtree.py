@@ -8,6 +8,7 @@ import yaml
 from pymdownx.blocks import BlocksExtension, BlocksProcessor
 from pymdownx.blocks.block import Block, type_html_identifier
 
+
 class InvalidYAMLError(BaseException):
     """Raised when YAML is invalid"""
 

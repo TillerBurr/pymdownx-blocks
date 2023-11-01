@@ -167,21 +167,20 @@ def test_invalid_yaml():
         DirTree(bad_dir)
 
 
-@pytest.mark.parametrize("class_type", ["note", "warning", "tip", "danger",None])
-@pytest.mark.parametrize('title',["A Title","Another Title",None])
-def test_title(markdown_fixture,class_type,title):
+@pytest.mark.parametrize("class_type", ["note", "warning", "tip", "danger", None])
+@pytest.mark.parametrize("title", ["A Title", "Another Title", None])
+def test_title(markdown_fixture, class_type, title):
     md = markdown_fixture(
         ["pymdownx_blocks.dirtree"], extension_config={"pymdownx_blocks.dirtree": []}
     )
     placeholder = "{{DIRTREE}}"
-    _input = generate_dirtree_input(placeholder, title=title,_type=class_type)
+    _input = generate_dirtree_input(placeholder, title=title, _type=class_type)
     _input = dedent_and_replace(_input, placeholder, threesubdir, dedent_new=True)
 
-    expected = generate_dirtree_expected(placeholder, title=title,_type=class_type)
+    expected = generate_dirtree_expected(placeholder, title=title, _type=class_type)
     expected = dedent_and_replace(
         expected, placeholder, expected_threesubdir, dedent_new=True
     )
 
     results = md.convert(_input)
     assert results == expected
-
