@@ -1,8 +1,8 @@
-from .utils import dedent, dedent_and_replace
 import pytest
 import yaml
 from pymdownx_blocks.dirtree import DirTree, InvalidTreeError, InvalidYAMLError
 
+from tests.utils import dedent, dedent_and_replace
 root_dir_files = """
                  root_dir/:
                     - file1
@@ -168,7 +168,7 @@ def test_invalid_yaml():
 
 
 @pytest.mark.parametrize("class_type", ["note", "warning", "tip", "danger", None])
-@pytest.mark.parametrize("title", ["A Title", "Another Title", None])
+@pytest.mark.parametrize("title", ["A Title", "AnotherTitle",None])
 def test_title(markdown_fixture, class_type, title):
     md = markdown_fixture(
         ["pymdownx_blocks.dirtree"], extension_config={"pymdownx_blocks.dirtree": []}
