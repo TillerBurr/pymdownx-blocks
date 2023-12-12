@@ -151,7 +151,7 @@ def generate_dirtree_expected(
 def test_build(test_input, expected_output):
     dedent_in = dedent(test_input)
     dedent_out = dedent(expected_output)
-    assert DirTree(dedent_in).build() == dedent_out
+    assert DirTree(dedent_in).build_tree() == dedent_out
 
 
 def test_invalid_trees():

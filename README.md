@@ -1,9 +1,9 @@
 # PyMdown Extensions Blocks
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-![PyPI - Version](https://img.shields.io/pypi/v/pymdownx-blocks)
+[![PyPI - Version](https://img.shields.io/pypi/v/pymdownx-blocks)](https://pypi.org/project/pymdownx-blocks/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pymdownx-blocks)
-![Tests](https://img.shields.io/github/actions/workflow/status/TillerBurr/pymdownx-blocks/tests)
+[![Tests](https://github.com/TillerBurr/pymdownx-blocks/workflows/tests/badge.svg)](https://github.com/TillerBurr/pymdownx-blocks/actions)
 
 
 
