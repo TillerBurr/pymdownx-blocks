@@ -3,6 +3,7 @@ import yaml
 from pymdownx_blocks.dirtree import DirTree, InvalidTreeError, InvalidYAMLError
 
 from tests.utils import dedent, dedent_and_replace
+
 root_dir_files = """
                  root_dir/:
                     - file1
@@ -98,6 +99,7 @@ expected_threesubdir = """
 def generate_dirtree_input(
     placeholder: str, title: str | None = None, _type: str | None = None
 ):
+    """Generate input for testing. Wraps the tree in the expected block format."""
     if title is None:
         title = ""
     else:
@@ -120,6 +122,7 @@ def generate_dirtree_input(
 def generate_dirtree_expected(
     placeholder: str, title: str | None = None, _type: str | None = None
 ):
+    """Generate expected output. Wraps the tree in the expected block format."""
     if title is None:
         title = "Directory Tree"
     if _type is None:
@@ -148,7 +151,7 @@ def generate_dirtree_expected(
 def test_build(test_input, expected_output):
     dedent_in = dedent(test_input)
     dedent_out = dedent(expected_output)
-    assert DirTree(dedent_in).build() == dedent_out
+    assert DirTree(dedent_in).build_tree() == dedent_out
 
 
 def test_invalid_trees():
@@ -168,7 +171,7 @@ def test_invalid_yaml():
 
 
 @pytest.mark.parametrize("class_type", ["note", "warning", "tip", "danger", None])
-@pytest.mark.parametrize("title", ["A Title", "AnotherTitle",None])
+@pytest.mark.parametrize("title", ["A Title", "AnotherTitle", None])
 def test_title(markdown_fixture, class_type, title):
     md = markdown_fixture(
         ["pymdownx_blocks.dirtree"], extension_config={"pymdownx_blocks.dirtree": []}
