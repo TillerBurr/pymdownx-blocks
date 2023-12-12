@@ -1,7 +1,7 @@
 [project]
 name = "pymdownx-blocks"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.1.1"
+description = "A Collection of Blocks for PyMdownX"
 authors = [
     { name = "Tyler Baur", email = "baur.tyler@gmail.com" }
 ]
